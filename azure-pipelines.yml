@@ -4,13 +4,13 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/java
 
 trigger:
-- main
+- main   # Deploy into main branch
 
 pool:
   vmImage: 'windows-latest' # other options: 'macOS-latest', 'ubuntu-latest'
 
 steps:
-- task: Maven@3
+- task: Maven@3   # Build, test, and deploy with Apache Maven.
   inputs:
     mavenPomFile: 'pom.xml'
     mavenOptions: '-Xmx3072m'
@@ -21,7 +21,7 @@ steps:
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
 
-- task: PublishCodeCoverageResults@1
+- task: PublishCodeCoverageResults@1   # Publish Cobertura or JaCoCo code coverage results from a build
   inputs:
     codeCoverageTool: "JaCoCo"
     summaryFileLocation: "$(System.DefaultWorkingDirectory)/**/site/jacoco/jacoco.xml"
