@@ -6,8 +6,21 @@
 trigger:
 - main   # Deploy into main branch
 
+# Uso de argumentos strategy y matrix para definir varias imágenes de máquinas
+# pool:
+#   vmImage: 'windows-latest' # other options: 'macOS-latest', 'ubuntu-latest'
+strategy:
+  matrix:
+    linux:
+      imageName: "ubuntu-latest"
+    mac:
+      imageName: "macOS-latest"
+    windows:
+      imageName: "windows-latest"
+  maxParallel: 3
+
 pool:
-  vmImage: 'windows-latest' # other options: 'macOS-latest', 'ubuntu-latest'
+  vmImage: $(imageName)
 
 steps:
 - task: Maven@3   # Build, test, and deploy with Apache Maven.
