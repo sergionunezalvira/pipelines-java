@@ -9,15 +9,32 @@ trigger:
 # Uso de argumentos strategy y matrix para definir varias imágenes de máquinas
 # pool:
 #   vmImage: 'windows-latest' # other options: 'macOS-latest', 'ubuntu-latest'
+
+# strategy:
+#   matrix:
+#     linux:
+#       imageName: "ubuntu-latest"
+#     mac:
+#       imageName: "macOS-latest"
+#     windows:
+#       imageName: "windows-latest"
+#   maxParallel: 3
+#
+# pool:
+#   vmImage: $(imageName)
+
+# Uso de argumentos strategy y matrix para definir varias versiones de Java
+# No se puede usar mas de un argumento strategy para tipo de máquina y versión Java
+
 strategy:
   matrix:
-    linux:
+    linux_jdk10:
       imageName: "ubuntu-latest"
-    mac:
-      imageName: "macOS-latest"
-    windows:
+      jdkVersion: "1.10"
+    windows_jdk11:
       imageName: "windows-latest"
-  maxParallel: 3
+      jdkVersion: "1.11"
+  maxParallel: 2
 
 pool:
   vmImage: $(imageName)
@@ -28,7 +45,7 @@ steps:
     mavenPomFile: 'pom.xml'
     mavenOptions: '-Xmx3072m'
     javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.8'
+    jdkVersionOption: $(jdkVersion)
     jdkArchitectureOption: 'x64'
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
