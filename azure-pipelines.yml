@@ -51,6 +51,7 @@ steps:
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
 
+
 - task: PublishCodeCoverageResults@1   # Publish Cobertura or JaCoCo code coverage results from a build
   inputs:
     codeCoverageTool: "JaCoCo"
